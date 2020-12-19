@@ -2,3 +2,5 @@ __pycache__/
 
 # jetbrains
 .idea
+test.pkl
+
