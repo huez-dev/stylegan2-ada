@@ -650,15 +650,23 @@ def create_celeba(tfrecord_dir, celeba_dir, cx=89, cy=121):
 
 #----------------------------------------------------------------------------
 
-def create_from_images(tfrecord_dir, image_dir, shuffle):
+from PIL import Image
+def create_from_images(tfrecord_dir, image_dir, shuffle, resize=128t ):
     print('Loading images from "%s"' % image_dir)
     image_filenames = sorted(glob.glob(os.path.join(image_dir, '*')))
     if len(image_filenames) == 0:
         error('No input images found')
 
+    def resize_np_image(image, width, height):
+        imgPIL = Image.fromarray(image)
+        imgPIL = imgPIL.resize((width, height))
+        return np.array(imgPIL)
+
     img = np.asarray(PIL.Image.open(image_filenames[0]))
+    img = resize_np_image(img, resize, resize)
     resolution = img.shape[0]
     channels = img.shape[2] if img.ndim == 3 else 1
+
     if img.shape[1] != resolution:
         error('Input images must have the same width and height')
     if resolution != 2 ** int(np.floor(np.log2(resolution))):
@@ -670,6 +678,7 @@ def create_from_images(tfrecord_dir, image_dir, shuffle):
         order = tfr.choose_shuffled_order() if shuffle else np.arange(len(image_filenames))
         for idx in range(order.size):
             img = np.asarray(PIL.Image.open(image_filenames[order[idx]]))
+            img = resize_np_image(img, resize, resize)
             if channels == 1:
                 img = img[np.newaxis, :, :] # HW => CHW
             else:
