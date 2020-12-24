@@ -175,10 +175,7 @@ def setup_training_options(
         desc += f'{gpus:d}'
         spec.ref_gpus = gpus
         #TODO: return batch size
-        print("--------------------------------------------------------------")
-        print(max(min(gpus * min(4096 // res, 32), 64), gpus))
-        print("--------------------------------------------------------------")
-        spec.mb = 4 #max(min(gpus * min(4096 // res, 32), 64), gpus) # keep gpu memory consumption at bay
+        spec.mb = 16 #max(min(gpus * min(4096 // res, 32), 64), gpus) # keep gpu memory consumption at bay
         spec.mbstd = min(spec.mb // gpus, 4) # other hyperparams behave more predictably if mbstd group size remains fixed
         spec.fmaps = 1 if res >= 512 else 0.5
         spec.lrate = 0.002 if res >= 1024 else 0.0025
