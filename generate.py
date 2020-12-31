@@ -132,13 +132,19 @@ def generate_images(network_pkl, seeds, truncation_psi, outdir, class_idx, dlate
     #         print(f"save generate.jpg ")
     #     except ValueError:
     #         pass
-    3#
+    #
     # OSC_dispatcher = dispatcher.Dispatcher()
     # OSC_dispatcher.map("/generate", messege_handler)
     # server = osc_server.ThreadingOSCUDPServer(("127.0.0.1", 12000), OSC_dispatcher)
     # server.serve_forever()
 
+
+    number = 0
+
     while True:
+
+        if (number > 100):
+            number = 0
 
         try:
             data = []
@@ -159,7 +165,8 @@ def generate_images(network_pkl, seeds, truncation_psi, outdir, class_idx, dlate
         images = Gs.run(z, label, **Gs_kwargs) # [minibatch, height, width, channel]
         pil_image = PIL.Image.fromarray(images[0], 'RGB')
         try:
-            pil_image.save("generate.jpg")
+            number += 1
+            pil_image.save("generate" + str(number) + ".jpg")
         except PermissionError:
             logging.error("can not generate generate.jpg, Permission Error")
         # print(f"save generate.jpg ")
