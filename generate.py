@@ -48,7 +48,7 @@ def remap2(value, low1, low2, high1, high2):
 
 # ----------------------------------------------------------------------------
 
-def generate_images(network_pkl, seeds, truncation_psi, outdir, class_idx, dlatents_npz):
+def generate_images(network_pkl, seeds, truncation_psi, outdir, class_idx, dlatents_npz, image_sum):
     # encoder(for mp4)
     fourcc = cv2.VideoWriter_fourcc('m', 'p', '4', 'v')
     # # output file name, encoder, fps, size(fit to image size)
@@ -143,7 +143,7 @@ def generate_images(network_pkl, seeds, truncation_psi, outdir, class_idx, dlate
 
     while True:
 
-        if (number > 100):
+        if (number > image_sum):
             number = 0
 
         try:
@@ -166,7 +166,7 @@ def generate_images(network_pkl, seeds, truncation_psi, outdir, class_idx, dlate
         pil_image = PIL.Image.fromarray(images[0], 'RGB')
         try:
             number += 1
-            pil_image.save("generate" + str(number) + ".jpg")
+            pil_image.save("geneated/generate" + str(number) + ".jpg")
         except PermissionError:
             logging.error("can not generate generate.jpg, Permission Error")
         # print(f"save generate.jpg ")
@@ -252,6 +252,8 @@ def main():
                         default=0.5)
     parser.add_argument('--class', dest='class_idx', type=int, help='Class label (default: unconditional)')
     parser.add_argument('--outdir', help='Where to save the output images', required=True, metavar='DIR')
+    parser.add_argument('--sum', dest='image_sum', type=int, help='number to be generated',
+                        default=100)
 
     args = parser.parse_args()
 
