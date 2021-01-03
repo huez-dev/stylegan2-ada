@@ -17,3 +17,12 @@ user/*
 # generate file
 generate.jpg
 request.txt
+
+# image generator
+ImageGenerator4StyleGan/renumber_images/*
+ImageGenerator4StyleGan/images_with_mv_name/*
+ImageGenerator4StyleGan/images_full/*
+ImageGenerator4StyleGan/videos/*
+ImageGenerator4StyleGan/credentials.json
+videos/*
+temp.jpg
