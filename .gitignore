@@ -5,4 +5,10 @@ __pycache__/
 test.pkl
 
 
-user/*
+user/datasets/*.tfrecords
+user/images/*
+user/snap/*
+
+generate.jpg
+request.txt
+
