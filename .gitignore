@@ -2,13 +2,18 @@ __pycache__/
 
 # jetbrains
 .idea
-test.pkl
 
+# pkl model
+test.pkl
 
 user/datasets/*.tfrecords
 user/images/*
 user/snap/*
+user/*
 
+# TouchDesigner
+*.[0-9]*.toe
+
+# generate file
 generate.jpg
 request.txt
-
