@@ -65,6 +65,9 @@ def generate_images(network_pkl, seeds, truncation_psi, outdir, class_idx, dlate
 
     os.makedirs(outdir, exist_ok=True)
 
+    # Remove this line if we can use 'out' directory to save generated images
+    os.makedirs("generate", exist_ok=True)
+
     # Render images for a given dlatent vector.
     if dlatents_npz is not None:
         print(f'Generating images from dlatents file "{dlatents_npz}"')
@@ -166,7 +169,8 @@ def generate_images(network_pkl, seeds, truncation_psi, outdir, class_idx, dlate
         pil_image = PIL.Image.fromarray(images[0], 'RGB')
         try:
             number += 1
-            pil_image.save("geneated/generate" + str(number) + ".jpg")
+            # Use 'out' directory instead of 'generate' if we can use 'out' directory to save generated images
+            pil_image.save("generate/generate" + str(number) + ".jpg")
         except PermissionError:
             logging.error("can not generate generate.jpg, Permission Error")
         # print(f"save generate.jpg ")
